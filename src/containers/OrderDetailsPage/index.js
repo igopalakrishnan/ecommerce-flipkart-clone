@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../actions";
 import Layout from "../../components/Layout";
 import Card from "../../components/UI/Card";
-//import Price from "../../components/UI/Price";
+import Price from "../../components/UI/Price";
+import { generatePublicUrl } from "../../urlConfig";
 
 import "./style.css";
 
@@ -24,15 +25,15 @@ const OrderDetailsPage = (props) => {
     dispatch(getOrder(payload));
   }, []);
 
-  /* const formatDate = (date) => {
+  const formatDate = (date) => {
     if (date) {
       const d = new Date(date);
       return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     }
     return "";
-  }; */
+  };
 
-  /* const formatDate2 = (date) => {
+  const formatDate2 = (date) => {
     const month = [
       "Jan",
       "Feb",
@@ -51,7 +52,7 @@ const OrderDetailsPage = (props) => {
       const d = new Date(date);
       return `${month[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
     }
-  }; */
+  };
 
   if (!(orderDetails && orderDetails.address)) {
     return null;
@@ -66,9 +67,9 @@ const OrderDetailsPage = (props) => {
         }}
       >
         <Card
-          /* style={{
+          style={{
             margin: "10px 0",
-          }} */
+          }}
         >
           <div className="delAdrContainer">
             <div className="delAdrDetails">
@@ -85,23 +86,14 @@ const OrderDetailsPage = (props) => {
             </div>
           </div>
         </Card>
-        <Card>
-            <div className=''>
-                <div>item status</div>
-                <div>item status</div>
-                <div>item status</div>
-                <div>item status</div>
-            </div>
-        </Card>
 
-        {/* {
-        orderDetails.items.map((item, index) => (
+        {orderDetails.items.map((item, index) => (
           <Card
             style={{ display: "flex", padding: "20px 0", margin: "10px 0" }}
           >
             <div className="flexRow">
               <div className="delItemImgContainer">
-                <img src={item.productId.productPictures[0].img} alt="" />
+                <img src={generatePublicUrl(item.productId.productPictures[0].img)} alt="" />
               </div>
               <div style={{ width: "250px" }}>
                 <div className="delItemName">{item.productId.name}</div>
@@ -112,9 +104,8 @@ const OrderDetailsPage = (props) => {
               <div className="orderTrack">
                 {orderDetails.orderStatus.map((status) => (
                   <div
-                    className={`orderStatus ${
-                      status.isCompleted ? "active" : ""
-                    }`}
+                    className={`orderStatus ${status.isCompleted ? "active" : ""
+                      }`}
                   >
                     <div
                       className={`point ${status.isCompleted ? "active" : ""}`}
@@ -132,8 +123,7 @@ const OrderDetailsPage = (props) => {
                 `Delivered on ${formatDate2(orderDetails.orderStatus[3].date)}`}
             </div>
           </Card>
-        ))
-        } */}
+        ))}
       </div>
     </Layout>
   );

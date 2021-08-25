@@ -115,7 +115,6 @@ const CheckoutPage = (props) => {
     setOrderSummary(true);
   };
 
-
   const selectAddress = (addr) => {
     //console.log(addr);
     const updatedAddress = address.map((adr) =>
@@ -186,21 +185,11 @@ const CheckoutPage = (props) => {
     //user.address.length === 0 && setNewAddress(true);
   }, [user.address]);
 
-  if(confirmOrder) {
-    return (
-      <Layout>
-        <Card>
-          <div>Thank You</div>
-        </Card>
-      </Layout>
-    )
-  }
-
-  /* useEffect(() => {
+  useEffect(() => {
     if (confirmOrder && user.placedOrderId) {
       props.history.push(`/order_details/${user.placedOrderId}`);
     }
-  }, [user.placedOrderId]); */
+  }, [user.placedOrderId]);
 
   return (
     <Layout>
@@ -230,35 +219,34 @@ const CheckoutPage = (props) => {
             active={!confirmAddress && auth.authenticate}
             body={
               <>
-                {
-                  confirmAddress ? (
-                    <div className="stepCompleted">{`${selectedAddress.name}  ${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
-                  ) : (
-                    address.map((adr) => (
-                      <Address
-                        selectAddress={selectAddress}
-                        enableAddressEditForm={enableAddressEditForm}
-                        confirmDeliveryAddress={confirmDeliveryAddress}
-                        onAddressSubmit={onAddressSubmit}
-                        adr={adr}
-                      />
-                    ))
-                  )}
+                {confirmAddress ? (
+                  <div className="stepCompleted">{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
+                ) : (
+                  address.map((adr) => (
+                    <Address
+                      selectAddress={selectAddress}
+                      enableAddressEditForm={enableAddressEditForm}
+                      confirmDeliveryAddress={confirmDeliveryAddress}
+                      onAddressSubmit={onAddressSubmit}
+                      adr={adr}
+                    />
+                  ))
+                )}
               </>
             }
           />
+
           {/* AddressForm */}
           {confirmAddress ? null : newAddress ? (
             <AddressForm onSubmitForm={onAddressSubmit} onCancel={() => { }} />
-          ) : /* auth.authenticate ? ( */
+          ) : auth.authenticate ? (
             <CheckoutStep
               stepNumber={"+"}
               title={"ADD NEW ADDRESS"}
               active={false}
               onClick={() => setNewAddress(true)}
             />
-            //) : null
-          }
+          ) : null}
 
           <CheckoutStep
             stepNumber={"3"}
