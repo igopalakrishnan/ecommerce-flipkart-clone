@@ -185,11 +185,24 @@ const CheckoutPage = (props) => {
     //user.address.length === 0 && setNewAddress(true);
   }, [user.address]);
 
-  useEffect(() => {
+  if(confirmOrder) {
+    return(
+      <Layout>
+        
+          <div style={{
+            textAlign:'center',
+            margin:'40px 0'
+          }}>Thank's for Your Confirm Order.....</div>
+        
+      </Layout>
+    )
+  }
+
+  /* useEffect(() => {
     if (confirmOrder && user.placedOrderId) {
       props.history.push(`/order_details/${user.placedOrderId}`);
     }
-  }, [user.placedOrderId]);
+  }, [user.placedOrderId]); */
 
   return (
     <Layout>
