@@ -9,6 +9,7 @@ const axiosIntance = axios.create({
   baseURL: api,
   headers: {
     Authorization: token ? `Bearer ${token}` : "",
+    'Access-Control-Allow-Origin': '*'
   },
 });
 
